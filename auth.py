@@ -1,5 +1,8 @@
 import os
 from colorama import Fore, Style
+from utils.file_handler import read_csv
+
+USER_FILE = "data/users.csv"
 
 def clear_screen():
     os.system("cls || clear")
@@ -25,10 +28,12 @@ def login():
         input("Tekan Enter...")
         return None
     
-    # perbaiki Login nya
-    if username == "admin" and password == "admin123":
-        return "admin"
-    elif username == "staff" and password == "staff123":
-        return "staff"
+    data = read_csv(USER_FILE)
+    if not data:
+        print("list kosong!")
     else:
-        return None
+        for user in data:
+            if user["username"] == username and user["password"] == password:
+                return user["role"]
+            else:
+                print("login gagal")
