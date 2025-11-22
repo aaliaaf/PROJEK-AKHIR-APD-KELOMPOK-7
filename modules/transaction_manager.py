@@ -1,7 +1,7 @@
 import os
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
-from colorama import Fore, Style
+from utils.common import *
 from datetime import datetime
 
 TRANSACTION_FILE = "data/transactions.csv"
@@ -9,13 +9,10 @@ TRANSACTION_FIELDS = ["id", "customer_id", "vehicle_id", "rent_date", "return_da
 VEHICLE_FILE = "data/vehicles.csv"
 CUSTOMER_FILE = "data/customers.csv"
 
-def clear_screen():
-    os.system("cls || clear")
-
 def list_transactions():
     transactions = read_csv(TRANSACTION_FILE)
     if not transactions:
-        print(Fore.YELLOW + "Tidak ada transaksi." + Style.RESET_ALL)
+        print(warning + "Tidak ada transaksi.")
         return
     table = PrettyTable()
     table.field_names = ["ID", "Pelanggan ID", "Kendaraan ID", "Sewa", "Kembali", "Status"]
@@ -30,10 +27,10 @@ def rent_vehicle():
     vehicles = read_csv(VEHICLE_FILE)
     customers = read_csv(CUSTOMER_FILE)
 
-    print("\n--- Daftar Kendaraan Tersedia ---")
+    print(menu + "\n--- Daftar Kendaraan Tersedia ---")
     available = [v for v in vehicles if v["status"] == "available"]
     if not available:
-        print(Fore.RED + "Tidak ada kendaraan tersedia!" + Style.RESET_ALL)
+        print(warning + "Tidak ada kendaraan tersedia!")
         return
 
     v_table = PrettyTable()
@@ -48,11 +45,11 @@ def rent_vehicle():
         print(Fore.RED + "Kendaraan tidak valid atau tidak tersedia!" + Style.RESET_ALL)
         return
 
-    print("\n--- Daftar Pelanggan ---")
+    print(menu + "\n--- Daftar Pelanggan ---")
     list_customers()
     cid = input("Masukkan ID pelanggan: ").strip()
     if not any(c["id"] == cid for c in customers):
-        print(Fore.RED + "Pelanggan tidak ditemukan!" + Style.RESET_ALL)
+        print(warning + "Pelanggan tidak ditemukan!")
         return
 
     transactions = read_csv(TRANSACTION_FILE)
@@ -76,7 +73,7 @@ def rent_vehicle():
     }
     transactions.append(transaction)
     write_csv(TRANSACTION_FILE, transactions, TRANSACTION_FIELDS)
-    print(Fore.GREEN + "Kendaraan berhasil disewa!" + Style.RESET_ALL)
+    print(done + "Kendaraan berhasil disewa!")
 
 def return_vehicle():
     transactions = read_csv(TRANSACTION_FILE)
@@ -84,10 +81,10 @@ def return_vehicle():
 
     rented = [t for t in transactions if t["status"] == "rented"]
     if not rented:
-        print(Fore.YELLOW + "Tidak ada kendaraan yang sedang disewa." + Style.RESET_ALL)
+        print(warning + "Tidak ada kendaraan yang sedang disewa.")
         return
 
-    print("\n--- Kendaraan yang Sedang Disewa ---")
+    print(menu + "\n--- Kendaraan yang Sedang Disewa ---")
     table = PrettyTable()
     table.field_names = ["Transaksi ID", "Pelanggan ID", "Kendaraan ID"]
     for t in rented:
@@ -97,7 +94,7 @@ def return_vehicle():
     tid = input("Masukkan ID transaksi untuk pengembalian: ").strip()
     selected = next((t for t in rented if t["id"] == tid), None)
     if not selected:
-        print(Fore.RED + "Transaksi tidak ditemukan!" + Style.RESET_ALL)
+        print(warning + "Transaksi tidak ditemukan!")
         return
 
     # Update transaksi
@@ -113,7 +110,7 @@ def return_vehicle():
 
     write_csv("data/transactions.csv", transactions, TRANSACTION_FIELDS)
     write_csv("data/vehicles.csv", vehicles, ["id", "type", "brand", "model", "plate", "status"])
-    print(Fore.GREEN + "Kendaraan berhasil dikembalikan!" + Style.RESET_ALL)
+    print(done + "Kendaraan berhasil dikembalikan!")
 
 # Aliases untuk reuse
 def list_customers():
