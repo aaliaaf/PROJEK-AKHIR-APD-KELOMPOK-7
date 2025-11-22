@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
-from colorama import Fore, Style
+from utils.common import *
 
 CUSTOMER_FILE = "data/customers.csv"
 CUSTOMER_FIELDS = ["id", "name", "phone", "license"]
@@ -8,7 +8,7 @@ CUSTOMER_FIELDS = ["id", "name", "phone", "license"]
 def list_customers():
     customers = read_csv(CUSTOMER_FILE)
     if not customers:
-        print(Fore.YELLOW + "Tidak ada pelanggan terdaftar." + Style.RESET_ALL)
+        print(warning + "Tidak ada pelanggan terdaftar.")
         return
     table = PrettyTable()
     table.field_names = ["ID", "Nama", "Telepon", "SIM"]
@@ -25,7 +25,7 @@ def add_customer():
     customer = {"id": new_id, "name": name, "phone": phone, "license": license_no}
     customers.append(customer)
     write_csv(CUSTOMER_FILE, customers, CUSTOMER_FIELDS)
-    print(Fore.GREEN + "Pelanggan berhasil ditambahkan!" + Style.RESET_ALL)
+    print(done + "Pelanggan berhasil ditambahkan!")
 
 def update_customer():
     list_customers()
@@ -37,9 +37,9 @@ def update_customer():
             c["phone"] = input(f"Telepon ({c['phone']}): ") or c["phone"]
             c["license"] = input(f"SIM ({c['license']}): ") or c["license"]
             write_csv(CUSTOMER_FILE, customers, CUSTOMER_FIELDS)
-            print(Fore.GREEN + "Pelanggan berhasil diperbarui!" + Style.RESET_ALL)
+            print(done + "Pelanggan berhasil diperbarui!")
             return
-    print(Fore.RED + "Pelanggan tidak ditemukan!" + Style.RESET_ALL)
+    print(warning + "Pelanggan tidak ditemukan!")
 
 def delete_customer():
     list_customers()
@@ -47,4 +47,4 @@ def delete_customer():
     customers = read_csv(CUSTOMER_FILE)
     customers = [c for c in customers if c["id"] != cid]
     write_csv(CUSTOMER_FILE, customers, CUSTOMER_FIELDS)
-    print(Fore.GREEN + "Pelanggan berhasil dihapus!" + Style.RESET_ALL)
+    print(done + "Pelanggan berhasil dihapus!")

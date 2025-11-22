@@ -1,7 +1,7 @@
 import os
 from prettytable import PrettyTable
 from utils.file_handler import read_csv, write_csv
-from colorama import Fore, Style
+from utils.common import *
 
 VEHICLE_FILE = "data/vehicles.csv"
 VEHICLE_FIELDS = ["id", "type", "brand", "model", "plate", "status"]
@@ -12,7 +12,7 @@ def clear_screen():
 def list_vehicles():
     vehicles = read_csv(VEHICLE_FILE)
     if not vehicles:
-        print(Fore.YELLOW + "Tidak ada kendaraan terdaftar." + Style.RESET_ALL)
+        print(Warning + "Tidak ada kendaraan terdaftar.")
         return
     table = PrettyTable()
     table.field_names = ["ID", "Tipe", "Merek", "Model", "Plat", "Status"]
@@ -22,7 +22,7 @@ def list_vehicles():
 
 def add_vehicle():
     clear_screen()
-    print(Fore.BLUE + "=== TAMBAH KENDARAAN ===" + Style.RESET_ALL)
+    print(menu + "=== TAMBAH KENDARAAN ===")
     vehicles = read_csv(VEHICLE_FILE)
     new_id = str(len(vehicles) + 1)
     v_type = input("Tipe kendaraan (motor/mobil): ").strip()
@@ -39,7 +39,7 @@ def add_vehicle():
     }
     vehicles.append(vehicle)
     write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
-    print(Fore.GREEN + "\nKendaraan berhasil ditambahkan!" + Style.RESET_ALL)
+    print(done + "\nKendaraan berhasil ditambahkan!")
 
 def update_vehicle():
     clear_screen()
@@ -54,9 +54,9 @@ def update_vehicle():
             v["model"] = input(f"Model ({v['model']}): ").strip() or v["model"]
             v["plate"] = input(f"Plat ({v['plate']}): ").strip() or v["plate"]
             write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
-            print(Fore.GREEN + "\nKendaraan berhasil diperbarui!" + Style.RESET_ALL)
+            print(done + "\nKendaraan berhasil diperbarui!")
             return
-    print(Fore.RED + "\nKendaraan tidak ditemukan!" + Style.RESET_ALL)
+    print(warning + "\nKendaraan tidak ditemukan!")
 
 def delete_vehicle():
     clear_screen()
@@ -64,14 +64,14 @@ def delete_vehicle():
     vid = input("\nID kendaraan yang ingin dihapus: ").strip()
     
     if not vid:
-        print(Fore.RED + "ID tidak boleh kosong!" + Style.RESET_ALL)
+        print(warning + "ID tidak boleh kosong!")
         return
 
     vehicles = read_csv(VEHICLE_FILE)
     if not any(v["id"] == vid for v in vehicles):
-        print(Fore.RED + "ID kendaraan tidak ditemukan!" + Style.RESET_ALL)
+        print(warning + "ID kendaraan tidak ditemukan!")
         return
 
     vehicles = [v for v in vehicles if v["id"] != vid]
     write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
-    print(Fore.GREEN + "\nKendaraan berhasil dihapus!" + Style.RESET_ALL)
+    print(done + "\nKendaraan berhasil dihapus!")
