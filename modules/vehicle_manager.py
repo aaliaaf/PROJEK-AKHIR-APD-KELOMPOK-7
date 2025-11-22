@@ -64,14 +64,14 @@ def delete_vehicle():
     vid = input("\nID kendaraan yang ingin dihapus: ").strip()
     
     if not vid:
-        print(Fore.RED + "❌ ID tidak boleh kosong!" + Style.RESET_ALL)
+        print(Fore.RED + "ID tidak boleh kosong!" + Style.RESET_ALL)
         return
 
     vehicles = read_csv(VEHICLE_FILE)
     if not any(v["id"] == vid for v in vehicles):
-        print(Fore.RED + "❌ ID kendaraan tidak ditemukan!" + Style.RESET_ALL)
+        print(Fore.RED + "ID kendaraan tidak ditemukan!" + Style.RESET_ALL)
         return
 
     vehicles = [v for v in vehicles if v["id"] != vid]
     write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
-    print(Fore.GREEN + "\n✅ Kendaraan berhasil dihapus!" + Style.RESET_ALL)
+    print(Fore.GREEN + "\nKendaraan berhasil dihapus!" + Style.RESET_ALL)

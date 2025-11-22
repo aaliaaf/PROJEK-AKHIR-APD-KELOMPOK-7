@@ -141,4 +141,5 @@ def main():
             print(Fore.RED + "Login gagal. Username atau password salah." + Style.RESET_ALL)
             input("Tekan Enter untuk mencoba lagi...")
 
-main()
+if __name__ == "__main__":
+    main()
