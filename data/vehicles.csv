@@ -1,8 +1,16 @@
 id,type,brand,model,plate,status,price
-1,motor,Honda,Beat,AB1234CD,rented,
-2,motor,Yamaha,NMAX,XY5678ZA,available,
-3,mobil,Toyota,Avanza,B1234XYZ,available,
-4,mobil,Suzuki,Ertiga,D5678ABC,available,
-5,motor,Honda,PCX,E9012FGH,available,
-6,mobil,wuling,bingo,KT2121SN,rented,50000
-7,motor,yamaha,d,ad,available,123
+1,motor,Honda,Beat,AB1234CD,rented,15000
+2,motor,Yamaha,NMAX,XY5678ZA,available,30000
+3,mobil,Toyota,Avanza,B1234XYZ,available,45000
+4,mobil,Suzuki,Ertiga,D5678ABC,available,50000
+5,motor,Honda,PCX,E9012FGH,available,20000
+6,mobil,Wuling,Bingo,KT2121SN,rented,50000
+7,motor,Yamaha,D,AD0001AA,available,40000
+8,mobil,Mitsubishi,Xpander,L9087TRF,available,55000
+9,mobil,Honda,Brio,F7733CDI,rented,48000
+10,motor,Suzuki,Satria,AB8765JK,available,18000
+11,motor,Vespa,Sprint,Z1122OP,maintenance,35000
+12,mobil,Daihatsu,Terios,G6743UIQ,available,52000
+13,mobil,Honda,Mobilio,N3345PQX,available,50000
+14,motor,Kawasaki,Ninja,BB5512HG,available,60000
+15,mobil,Tesla,Model 3,BY2234ZZ,rented,150000
