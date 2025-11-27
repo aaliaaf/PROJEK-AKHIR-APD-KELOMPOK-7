@@ -9,113 +9,133 @@ import questionary
 # Inisialisasi Colorama
 init(autoreset=True)
 
+
 def admin_menu():
     while True:
         clear_screen()
         print(menu + "=== MENU ADMIN ===")
-        print("1. Kelola Kendaraan")
-        print("2. Kelola Pelanggan")
-        print("3. Lihat Semua Transaksi")
-        print("4. Kembali ke Login")
-        choice = input("\nPilih menu (1-4): ").strip()
+        choice = questionary.select(
+            "Apa pilihan ?",
+            choices=[
+                "Kelola Kendaraan",
+                "Kelola Pelanggan",
+                "Lihat Semua Transaksi",
+                "Kembali ke Login"
+            ]
+        ).ask()
 
-        if choice == "1":
+        if choice == "Kelola Kendaraan":
             manage_vehicles()
-        elif choice == "2":
+        elif choice == "Kelola Pelanggan":
             manage_customers()
-        elif choice == "3":
+        elif choice == "Lihat Semua Transaksi":
             clear_screen()
             list_transactions()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "4":
+        elif choice == "Kembali ke Login":
             break
         else:
             print(warning + "Pilihan tidak valid!")
             input("Tekan Enter...")
+
 
 def manage_vehicles():
     while True:
         clear_screen()
         print(menu + "=== KELOLA KENDARAAN ===")
-        print("1. Lihat Semua Kendaraan")
-        print("2. Tambah Kendaraan")
-        print("3. Update Kendaraan")
-        print("4. Hapus Kendaraan")
-        print("5. Kembali")
-        choice = input("\nPilih (1-5): ").strip()
+        choice = questionary.select(
+            "Apa pilihan ?",
+            choices=[
+                "Lihat Semua Kendaraan",
+                "Tambah Kendaraan",
+                "Update Kendaraan",
+                "Hapus Kendaraan",
+                "Kembali",
+            ]
+        ).ask()
 
-        if choice == "1":
+        if choice == "Lihat Semua Kendaraan":
             list_vehicles()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "2":
+        elif choice == "Tambah Kendaraan":
             add_vehicle()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "3":
+        elif choice == "Update Kendaraan":
             update_vehicle()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "4":
+        elif choice == "Hapus Kendaraan":
             delete_vehicle()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "5":
+        elif choice == "Kembali":
             break
         else:
             print(warning + "Pilihan tidak valid!")
             input("Tekan Enter...")
+
 
 def manage_customers():
     while True:
         clear_screen()
         print(menu + "=== KELOLA PELANGGAN ===")
-        print("1. Lihat Semua Pelanggan")
-        print("2. Tambah Pelanggan")
-        print("3. Update Pelanggan")
-        print("4. Hapus Pelanggan")
-        print("5. Kembali")
-        choice = input("\nPilih (1-5): ").strip()
-
-        if choice == "1":
+        choice = questionary.select(
+            "Apa pilihan ?",
+            choices=[
+                "Lihat Semua Pelanggan",
+                "Tambah Pelanggan",
+                "Update Pelanggan",
+                "Hapus Pelanggan",
+                "Kembali",
+            ]
+        ).ask()
+        if choice == "Lihat Semua Pelanggan":
             list_customers()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "2":
+        elif choice == "Tambah Pelanggan":
             add_customer()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "3":
+        elif choice == "Update Pelanggan":
             update_customer()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "4":
+        elif choice == "Hapus Pelanggan":
             delete_customer()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "5":
+        elif choice == "Kembali":
             break
         else:
             print(warning + "Pilihan tidak valid!")
             input("Tekan Enter...")
+
 
 def staff_menu():
     while True:
         clear_screen()
         print(menu + "=== MENU STAFF ===")
-        print("1. Sewa Kendaraan")
-        print("2. Kembalikan Kendaraan")
-        print("3. Lihat Transaksi")
-        print("4. Kembali ke Login")
-        choice = input("\nPilih menu (1-4): ").strip()
+        choice = questionary.select(
+            "Apa pilihan ?",
+            choices=[
+                "Sewa Kendaraan",
+                "Kembalikan Kendaraan",
+                "Lihat Transaksi",
+                "Kembali ke Login",
+            ]
+        ).ask()
 
-        if choice == "1":
+        if choice == "Sewa Kendaraan":
             rent_vehicle()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "2":
+        elif choice == "Kembalikan Kendaraan":
             return_vehicle()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "3":
+        elif choice == "Lihat Transaksi":
             clear_screen()
             list_transactions()
             input("\nTekan Enter untuk kembali...")
-        elif choice == "4":
+        elif choice == "Kembali ke Login":
             break
         else:
             print(warning + "Pilihan tidak valid!")
             input("Tekan Enter...")
+
 
 def main():
     while True:
@@ -125,10 +145,10 @@ def main():
 
         pilihan = questionary.select(
             "pilihan: ",
-        choices= ["login", "register", "exit"]
+            choices=["login", "register", "exit"]
         ).ask()
-        
-        if pilihan == "login": 
+
+        if pilihan == "login":
             print("menu login")
             role = login()
             if role == "admin":
@@ -141,6 +161,7 @@ def main():
             register()
         elif pilihan == "exit":
             break
+
 
 if __name__ == "__main__":
     main()

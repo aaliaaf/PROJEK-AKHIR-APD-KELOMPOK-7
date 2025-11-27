@@ -78,6 +78,13 @@ def delete_vehicle():
         print(warning + "ID kendaraan tidak ditemukan!")
         return
 
+    for v in vehicles:
+        if v["id"] == vid:
+            if v["status"] == "rented":
+                print("Kendaraan Masih Disewa tidak bisa dihapus")
+                input("Tekan Enter...")
+                return
+
     vehicles = [v for v in vehicles if v["id"] != vid]
     write_csv(VEHICLE_FILE, vehicles, VEHICLE_FIELDS)
     print(done + "\nKendaraan berhasil dihapus!")

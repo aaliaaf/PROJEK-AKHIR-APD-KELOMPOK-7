@@ -10,6 +10,7 @@ VEHICLE_FILE = "data/vehicles.csv"
 CUSTOMER_FILE = "data/customers.csv"
 
 def list_transactions():
+    print(menu + "\n--- Lihat Semua Transaksi ---")
     transactions = read_csv(TRANSACTION_FILE)
     if not transactions:
         print(warning + "Tidak ada transaksi.")
@@ -54,7 +55,9 @@ def rent_vehicle():
 
     transactions = read_csv(TRANSACTION_FILE)
     new_id = str(len(transactions) + 1)
-    rent_date = datetime.now().strftime("%Y-%m-%d")
+    rent_date = datetime.now()
+    return_date = rent_date + timedelta(days=3)
+    rent_date = rent_date.strftime("%Y-%m-%d")
 
     # Update status kendaraan
     for v in vehicles:
@@ -73,6 +76,17 @@ def rent_vehicle():
     }
     transactions.append(transaction)
     write_csv(TRANSACTION_FILE, transactions, TRANSACTION_FIELDS)
+
+
+    # Struk
+    table = PrettyTable()
+    table.field_names = ["Rincian", "Detail"]
+    table.align = "l"
+    table.add_row(["Tanggal Sewa", rent_date])
+    table.add_row(["Batas Sewa (3 hari)", return_date.strftime("%Y-%m-%d") ])
+    table.add_row(["Denda / Hari", f"Rp 10,000"])
+    print(table)
+
     print(done + "Kendaraan berhasil disewa!")
 
 def return_vehicle():
@@ -97,8 +111,16 @@ def return_vehicle():
         print(warning + "Transaksi tidak ditemukan!")
         return
 
-    
-
+    return_date = input("Masukkan tanggal pengembalian (YYYY-MM-DD): ").strip()
+    try:
+        datetime.strptime(return_date, "%Y-%m-%d")
+        rent_dt = datetime.strptime(selected["rent_date"], "%Y-%m-%d")
+        max_sewa = 3  # hari
+        tgl_batasSewa = rent_dt + timedelta(days=max_sewa)
+        tgl_batasSewa_str = tgl_batasSewa.strftime("%Y-%m-%d")
+    except ValueError:
+        print(warning + "Format tanggal salah! Gunakan Format (YYYY-MM-DD)" + Style.RESET_ALL)
+        return
     hari_sewa = hitung_hari_sewa(selected["rent_date"], return_date) 
     hari_telat = hitung_hari_telat(tgl_batasSewa_str, return_date) 
     denda = hitung_denda(hari_telat)

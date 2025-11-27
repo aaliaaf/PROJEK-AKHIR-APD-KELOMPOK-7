@@ -11,13 +11,13 @@ def login():
     username = input("Username: ").strip()
     
     if not username:
-        print(warning + "❌ Username tidak boleh kosong!")
+        print(warning + "Username tidak boleh kosong!")
         input("Tekan Enter...")
         return None
 
     password = input("Password: ").strip()
     if not password:
-        print(warning + "❌ Password tidak boleh kosong!")
+        print(warning + "Password tidak boleh kosong!")
         input("Tekan Enter...")
         return None
     
@@ -32,21 +32,28 @@ def login():
                 print(warning + "login gagal")
 
 def register():
-    nama = input("masukkan username: ").strip()
-    pw = input("masukkan password: ").strip()
-    if not nama:
+    username = input("masukkan username: ").strip()
+    password = input("masukkan password: ").strip()
+    if not username:
         print(warning + "Username Tidak Boleh Kosong!")
         input("Tekan Enter...")
         return
-    if not pw:
+    if not password:
         print("Password Tidak Boleh Kosong!")
         input("Tekan Enter...")
         return
     users = read_csv("data/users.csv")
+
+    for user in users:
+        if username == user["username"]:
+            print("username tidak boleh sama")
+            input("Tekan Enter...")
+            return
+
     newusers = {
         "id": str(int(users[-1]["id"]) + 1),
-        "username": nama, 
-        "password": pw,
+        "username": username, 
+        "password": password,
         "role": "staff"
         }
     users.append(newusers)
