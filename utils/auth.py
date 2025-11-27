@@ -42,7 +42,7 @@ def register():
         print("Password Tidak Boleh Kosong!")
         input("Tekan Enter...")
         return
-    users = read_csv("../data/users.csv")
+    users = read_csv("data/users.csv")
 
     for user in users:
         if username == user["username"]:
